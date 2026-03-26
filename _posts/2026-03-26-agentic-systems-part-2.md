@@ -1,6 +1,6 @@
 ---
 title: "Agentic AI Systems — Part 2: Planning and Tool Use"
-date: 2026-03-26 14:00:00 -0400
+date: 2026-03-26 12:10:00 -0400
 categories: [AI Systems, Agentic AI]
 tags: [agents, tool-use, planning, function-calling]
 math: true
