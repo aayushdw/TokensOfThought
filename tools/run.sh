@@ -51,4 +51,25 @@ if [ -e /proc/1/cgroup ] && grep -q docker /proc/1/cgroup; then
 fi
 
 echo -e "\n> $command\n"
-eval "$command"
+
+wait_for_port() {
+  local port=$1
+  local retries=10
+  while lsof -iTCP:"$port" -sTCP:LISTEN -t >/dev/null 2>&1; do
+    if [ $retries -le 0 ]; then
+      echo "> Port $port still in use. Killing remaining processes..."
+      lsof -iTCP:"$port" -sTCP:LISTEN -t | xargs kill -9 2>/dev/null
+      sleep 1
+      return
+    fi
+    retries=$((retries - 1))
+    sleep 1
+  done
+}
+
+while true; do
+  eval "$command" || true
+  echo -e "\n> Server exited unexpectedly. Restarting...\n"
+  wait_for_port 4000
+  wait_for_port 35729
+done

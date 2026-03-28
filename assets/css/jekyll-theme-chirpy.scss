@@ -1,0 +1,411 @@
+--- ---
+
+/* prettier-ignore */
+@use 'main
+ {
+  %- if jekyll.environment=='production' -%
+}
+
+.bundle {
+  %- endif -%
+}
+
+';
+
+/* =====================================================
+   Tokens of Thought — Custom Styles
+   Brand palette derived from logo: #7F77DD → #5DCAA5
+   ===================================================== */
+
+/* ----- 1. Brand Color Palette ----- */
+
+:root {
+  /* Brand tokens */
+  --tot-purple: #7F77DD;
+  --tot-purple-deep: #6B63D1;
+  --tot-purple-light: #9B95E5;
+  --tot-teal: #5DCAA5;
+  --tot-teal-deep: #49B893;
+  --tot-teal-light: #7DD8B8;
+}
+
+/* Light mode overrides */
+[data-mode="light"],
+:root:not([data-mode]) {
+  @media (prefers-color-scheme: light) {
+    --link-color: #6B63D1;
+    --link-underline-color: rgba(127, 119, 221, 0.2);
+    --toc-highlight: #7F77DD;
+    --checkbox-checked-color: #7F77DD;
+    --sidebar-active-color: #6B63D1;
+    --sidebar-hover-bg: rgba(127, 119, 221, 0.08);
+    --btn-share-hover-color: #6B63D1;
+    --tag-hover: rgba(127, 119, 221, 0.12);
+    --prompt-info-icon-color: #6B63D1;
+    --prompt-tip-icon-color: #49B893;
+  }
+}
+
+/* Also apply without media query for explicit light mode */
+[data-mode="light"] {
+  --link-color: #6B63D1;
+  --link-underline-color: rgba(127, 119, 221, 0.2);
+  --toc-highlight: #7F77DD;
+  --checkbox-checked-color: #7F77DD;
+  --sidebar-active-color: #6B63D1;
+  --sidebar-hover-bg: rgba(127, 119, 221, 0.08);
+  --btn-share-hover-color: #6B63D1;
+  --tag-hover: rgba(127, 119, 221, 0.12);
+  --prompt-info-icon-color: #6B63D1;
+  --prompt-tip-icon-color: #49B893;
+}
+
+/* Dark mode overrides */
+[data-mode="dark"] {
+  --link-color: #9B95E5;
+  --link-underline-color: rgba(155, 149, 229, 0.25);
+  --toc-highlight: #9B95E5;
+  --checkbox-checked-color: #9B95E5;
+  --sidebar-active-color: #B0ABF0;
+  --sidebar-hover-bg: rgba(127, 119, 221, 0.12);
+  --btn-share-hover-color: #9B95E5;
+  --tag-hover: rgba(127, 119, 221, 0.2);
+  --tag-border: rgba(127, 119, 221, 0.3);
+  --prompt-info-icon-color: #9B95E5;
+  --prompt-tip-icon-color: #5DCAA5;
+}
+
+/* Handle system preference dark mode when no explicit data-mode */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-mode]) {
+    --link-color: #9B95E5;
+    --link-underline-color: rgba(155, 149, 229, 0.25);
+    --toc-highlight: #9B95E5;
+    --checkbox-checked-color: #9B95E5;
+    --sidebar-active-color: #B0ABF0;
+    --sidebar-hover-bg: rgba(127, 119, 221, 0.12);
+    --btn-share-hover-color: #9B95E5;
+    --tag-hover: rgba(127, 119, 221, 0.2);
+    --tag-border: rgba(127, 119, 221, 0.3);
+    --prompt-info-icon-color: #9B95E5;
+    --prompt-tip-icon-color: #5DCAA5;
+  }
+}
+
+/* ----- 1b. Always-Dark Code Blocks ----- */
+
+/* Force dark-mode code block variables regardless of page theme */
+.highlight,
+div.highlighter-rouge,
+figure.highlight,
+pre {
+  --language-border-color: #3a3558;
+  --highlight-bg-color: #252046;
+  --highlighter-rouge-color: #dce8f5;
+  --highlight-lineno-color: #9090a8;
+  --inline-code-bg: rgb(255 255 255 / 8%);
+  --code-color: #e8e6f0;
+  --code-header-text-color: #8886a0;
+  --code-header-muted-color: #3a3558;
+  --code-header-icon-color: #70708c;
+  --clipboard-checked-color: #5ddba0;
+  --filepath-text-color: #d4d0e8;
+
+  background-color: #252046 !important;
+  color: #d0d0d0;
+}
+
+/* Dark syntax token colors — tuned for #252046 background */
+.highlight .gp {
+  color: #9eaab5 !important;
+}
+
+.highlight table td {
+  padding: 5px;
+}
+
+.highlight table pre {
+  margin: 0;
+}
+
+.highlight,
+.highlight .w {
+  color: #e8e6f0 !important;
+  background-color: #252046 !important;
+}
+
+.highlight .err {
+  color: #252046 !important;
+  background-color: #d06070 !important;
+}
+
+.highlight .c,
+.highlight .ch,
+.highlight .cd,
+.highlight .cm,
+.highlight .cpf,
+.highlight .c1,
+.highlight .cs {
+  color: #9a9ab0 !important;
+}
+
+.highlight .cp {
+  color: #f4c97b !important;
+}
+
+.highlight .nt {
+  color: #f4c97b !important;
+}
+
+.highlight .o,
+.highlight .ow {
+  color: #e8e6f0 !important;
+}
+
+.highlight .p,
+.highlight .pi {
+  color: #e8e6f0 !important;
+}
+
+.highlight .gi {
+  color: #a8c564 !important;
+}
+
+.highlight .gd {
+  color: #f4a0a0 !important;
+  background-color: #3a1a2e !important;
+}
+
+.highlight .gh {
+  color: #8dd0eb !important;
+  background-color: #252046 !important;
+  font-weight: bold;
+}
+
+.highlight .k,
+.highlight .kn,
+.highlight .kp,
+.highlight .kr,
+.highlight .kv {
+  color: #c98ebb !important;
+}
+
+.highlight .kc {
+  color: #e09455 !important;
+}
+
+.highlight .kt {
+  color: #e09455 !important;
+}
+
+.highlight .kd {
+  color: #e09455 !important;
+}
+
+.highlight .s,
+.highlight .sb,
+.highlight .sc,
+.highlight .dl,
+.highlight .sd,
+.highlight .s2,
+.highlight .sh,
+.highlight .sx,
+.highlight .s1 {
+  color: #a8c564 !important;
+}
+
+.highlight .sa {
+  color: #c98ebb !important;
+}
+
+.highlight .sr {
+  color: #80ccbb !important;
+}
+
+.highlight .si {
+  color: #d08050 !important;
+}
+
+.highlight .se {
+  color: #d08050 !important;
+}
+
+.highlight .nn {
+  color: #f4c97b !important;
+}
+
+.highlight .nc {
+  color: #f4c97b !important;
+}
+
+.highlight .no {
+  color: #f4c97b !important;
+}
+
+.highlight .na {
+  color: #8dd0eb !important;
+}
+
+.highlight .m,
+.highlight .mb,
+.highlight .mf,
+.highlight .mh,
+.highlight .mi,
+.highlight .il,
+.highlight .mo,
+.highlight .mx {
+  color: #a8c564 !important;
+}
+
+.highlight .ss {
+  color: #a8c564 !important;
+}
+
+/* Inline code also gets dark treatment */
+code.highlighter-rouge {
+  background-color: rgb(37 32 70 / 90%) !important;
+  color: #dce8f5 !important;
+}
+
+/* ----- 2. Premium Typography ----- */
+
+body {
+  font-family: 'Inter', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.site-title,
+.card-title,
+.post-title {
+  font-family: 'Space Grotesk', 'Lato', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Sidebar title with the new heading font */
+#sidebar .site-title {
+  font-family: 'Space Grotesk', 'Lato', sans-serif !important;
+  letter-spacing: -0.5px;
+}
+
+/* Post content gets slightly better letter-spacing */
+.post-content {
+  letter-spacing: 0.01em;
+}
+
+/* Code blocks keep their monospace font */
+code,
+pre,
+.highlight {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', monospace !important;
+}
+
+/* Fix: code blocks without line numbers need pre-like whitespace */
+.highlight>code {
+  display: block;
+  white-space: pre;
+  overflow-x: auto;
+  padding: 0.5rem 1rem;
+}
+
+/* ----- 3. Gradient Post Titles ----- */
+
+.post-title,
+#post-list .card-title,
+h1.dynamic-title {
+  background: linear-gradient(135deg, var(--tot-purple), var(--tot-teal));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  z-index: 1;
+}
+
+/*
+ * The theme's .post-preview::before creates an absolute-positioned hover
+ * overlay that bleeds through transparent gradient text. Disable it.
+ */
+#post-list .post-preview::before {
+  display: none;
+}
+
+/* Keep link wrapper clickable and inherit the gradient on hover */
+#post-list .card-title a,
+.post-title a {
+  background: linear-gradient(135deg, var(--tot-purple), var(--tot-teal));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#post-list .card-title a:hover,
+.post-title a:hover {
+  background: linear-gradient(135deg, var(--tot-purple-light), var(--tot-teal-light));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-decoration: none;
+}
+
+/* ----- 4. Reading Progress Bar ----- */
+
+#reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  z-index: 99999;
+  background: linear-gradient(90deg, var(--tot-purple), var(--tot-teal));
+  transition: width 80ms linear;
+  pointer-events: none;
+}
+
+/* ----- 5. Card-Style Post Previews ----- */
+
+#post-list .card {
+  border: 1px solid rgba(127, 119, 221, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#post-list .card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(127, 119, 221, 0.12);
+}
+
+/* Dark mode: slightly brighter border and shadow */
+[data-mode="dark"] #post-list .card {
+  border-color: rgba(155, 149, 229, 0.15);
+}
+
+[data-mode="dark"] #post-list .card:hover {
+  box-shadow: 0 8px 24px rgba(155, 149, 229, 0.10);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-mode]) #post-list .card {
+    border-color: rgba(155, 149, 229, 0.15);
+  }
+
+  :root:not([data-mode]) #post-list .card:hover {
+    box-shadow: 0 8px 24px rgba(155, 149, 229, 0.10);
+  }
+}
+
+/* ----- 6. Branded Text Selection ----- */
+
+::selection {
+  background: rgba(127, 119, 221, 0.25);
+  color: inherit;
+}
+
+::-moz-selection {
+  background: rgba(127, 119, 221, 0.25);
+  color: inherit;
+}

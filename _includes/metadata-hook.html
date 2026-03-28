@@ -1,0 +1,23 @@
+<!-- Google Fonts: Inter (body) + Space Grotesk (headings) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<!-- Reading progress bar (post pages only) -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Only activate on post pages (Chirpy uses layout: post → layout: default)
+  if (!document.querySelector('article.px-1 div.content')) return;
+
+  var bar = document.createElement('div');
+  bar.id = 'reading-progress';
+  document.body.prepend(bar);
+
+  window.addEventListener('scroll', function () {
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if (docHeight > 0) {
+      bar.style.width = (window.scrollY / docHeight * 100) + '%';
+    }
+  }, { passive: true });
+});
+</script>
