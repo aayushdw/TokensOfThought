@@ -353,6 +353,30 @@ h1.dynamic-title {
   text-decoration: none;
 }
 
+/* ----- 3b. Tinted Post Content Headings ----- */
+
+/* Light mode: purple → teal progression across heading levels */
+.content h2 { color: var(--tot-purple-deep); }
+.content h3 { color: var(--tot-purple); }
+.content h4 { color: #6A9FCC; }
+.content h5 { color: var(--tot-teal-deep); }
+.content h6 { color: var(--tot-teal); }
+
+/* Dark mode: lighter variants of the same progression */
+[data-mode="dark"] .content h2 { color: var(--tot-purple-light); }
+[data-mode="dark"] .content h3 { color: #A8A0EE; }
+[data-mode="dark"] .content h4 { color: #8BB8D8; }
+[data-mode="dark"] .content h5 { color: var(--tot-teal-light); }
+[data-mode="dark"] .content h6 { color: #90E0C6; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-mode]) .content h2 { color: var(--tot-purple-light); }
+  :root:not([data-mode]) .content h3 { color: #A8A0EE; }
+  :root:not([data-mode]) .content h4 { color: #8BB8D8; }
+  :root:not([data-mode]) .content h5 { color: var(--tot-teal-light); }
+  :root:not([data-mode]) .content h6 { color: #90E0C6; }
+}
+
 /* ----- 4. Reading Progress Bar ----- */
 
 #reading-progress {
