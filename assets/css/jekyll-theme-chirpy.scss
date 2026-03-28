@@ -1,15 +1,11 @@
---- ---
+---
+---
 
 /* prettier-ignore */
 @use 'main
- {
-  %- if jekyll.environment=='production' -%
-}
-
-.bundle {
-  %- endif -%
-}
-
+{%- if jekyll.environment == 'production' -%}
+  .bundle
+{%- endif -%}
 ';
 
 /* =====================================================
@@ -177,7 +173,7 @@ pre {
 }
 
 .highlight .gh {
-  color: #8dd0eb !important;
+  color: #7dd3fc !important;
   background-color: #252046 !important;
   font-weight: bold;
 }
@@ -243,7 +239,7 @@ pre {
 }
 
 .highlight .na {
-  color: #8dd0eb !important;
+  color: #7dd3fc !important;
 }
 
 .highlight .m,
@@ -301,6 +297,9 @@ code,
 pre,
 .highlight {
   font-family: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', monospace !important;
+  font-feature-settings: 'liga' 1, 'calt' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Fix: code blocks without line numbers need pre-like whitespace */
