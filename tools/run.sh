@@ -52,24 +52,52 @@ fi
 
 echo -e "\n> $command\n"
 
-wait_for_port() {
+trap 'echo -e "\n> Shutting down..."; exit 0' INT TERM
+
+kill_port() {
   local port=$1
-  local retries=10
-  while lsof -iTCP:"$port" -sTCP:LISTEN -t >/dev/null 2>&1; do
-    if [ $retries -le 0 ]; then
-      echo "> Port $port still in use. Killing remaining processes..."
-      lsof -iTCP:"$port" -sTCP:LISTEN -t | xargs kill -9 2>/dev/null
+  local pids
+  pids=$(lsof -iTCP:"$port" -sTCP:LISTEN -t 2>/dev/null)
+  if [ -n "$pids" ]; then
+    echo "> Port $port in use (PIDs: $pids). Killing..."
+    echo "$pids" | xargs kill -9 2>/dev/null
+    # Wait until the port is actually free
+    local retries=10
+    while lsof -iTCP:"$port" -sTCP:LISTEN -t >/dev/null 2>&1; do
+      if [ $retries -le 0 ]; then
+        echo "> ERROR: Port $port still in use after kill. Exiting."
+        exit 1
+      fi
+      retries=$((retries - 1))
       sleep 1
-      return
-    fi
-    retries=$((retries - 1))
-    sleep 1
-  done
+    done
+  fi
 }
 
+# Clean up ports before first launch
+kill_port 4000
+kill_port 35729
+
+crash_count=0
+max_crashes=5
+
 while true; do
-  eval "$command" || true
-  echo -e "\n> Server exited unexpectedly. Restarting...\n"
-  wait_for_port 4000
-  wait_for_port 35729
+  eval "$command"
+  exit_code=$?
+
+  # If Jekyll exited cleanly (e.g. user stopped it), don't restart
+  if [ $exit_code -eq 0 ]; then
+    break
+  fi
+
+  crash_count=$((crash_count + 1))
+  if [ $crash_count -ge $max_crashes ]; then
+    echo -e "\n> Server crashed $crash_count times in a row. Stopping to avoid loop."
+    echo "> Fix the issue and re-run the script."
+    exit 1
+  fi
+
+  echo -e "\n> Server exited unexpectedly (crash $crash_count/$max_crashes). Restarting...\n"
+  kill_port 4000
+  kill_port 35729
 done
